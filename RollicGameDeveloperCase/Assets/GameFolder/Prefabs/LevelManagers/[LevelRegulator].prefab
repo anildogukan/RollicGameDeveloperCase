@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6883729776239770355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6883729776239770353}
+  - component: {fileID: 6883729776239770352}
+  m_Layer: 0
+  m_Name: '[LevelRegulator]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6883729776239770353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6883729776239770355}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6883729776239770352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6883729776239770355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 106a45937d684e24495a11a1df6e056e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level:
+  - {fileID: 5221032650937616801, guid: b1e747c2133e21e42b0e87aad7f5530e, type: 3}
+  - {fileID: 1555510856009313255, guid: 6f51b38c88a26de4ab7a51a1f697c5a3, type: 3}
+  - {fileID: 2180619691264647773, guid: d8bffd03ba2eaa849b9d36b659c2b6f2, type: 3}
+  - {fileID: 1667112333765510172, guid: fc52fb93a1ccc2f4194134f35309415c, type: 3}
+  - {fileID: 6151130499150794563, guid: 10de9e5214bdeae4784c0fbc96971059, type: 3}
+  - {fileID: 3452659465257894853, guid: a7c506f66d1828b44963c66a3d218c72, type: 3}
+  - {fileID: 6202970552198700440, guid: ba5407e10b96c964c817866149676210, type: 3}
+  - {fileID: 4466670137585191445, guid: 47aeeb78d52c2c84ab41a2166faa0fa9, type: 3}
+  - {fileID: 1546207048977298481, guid: 2928aa4c01c83304e951654f5572828f, type: 3}
+  - {fileID: 15354694904391420, guid: e417c41673d1c974a90091760e4ad35d, type: 3}
+  createdLevels: []
+  _playerPrefab: {fileID: 6064778709173776720, guid: 2b08a4917f48e524ca704705ddeb81b4,
+    type: 3}
