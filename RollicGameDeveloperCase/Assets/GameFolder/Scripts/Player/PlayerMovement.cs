@@ -32,8 +32,7 @@ namespace RollicDeveloperCase.Player
         public float maxVelocity = 40;
 
 
-        [SerializeField] private float jumpingGravity;
-        private Vector3 startGravity;
+       
 
         public bool canMovingStartPosition;
 
@@ -42,27 +41,24 @@ namespace RollicDeveloperCase.Player
         private void Awake()
         {
             startSpeed = forwardSpeed;
-            startGravity = Physics.gravity;
-            
+                   
         }
 
         private void OnEnable()
         {
             PlayerCollisionController.OnHitElevator += StopPlayerWait;
-            PlayerCollisionController.OnHitBumpEndLine += SetGravityOnJump;
+           
             GameManager.OnEndGameStarted += StopPlayer;
-            GameManager.OnEndGameStarted += SetRigidboySettingsOnEndGame;
+            
             GameManager.OnLevelCompleted += StoplPlayerWithDrag;
             GameManager.OnLevelStarted += CannotMoveStartPosition;
-
-
         }
         private void OnDisable()
         {
             PlayerCollisionController.OnHitElevator -= StopPlayerWait;
-            PlayerCollisionController.OnHitBumpEndLine += SetGravityOnJump;
+            
             GameManager.OnEndGameStarted -= StopPlayer;
-            GameManager.OnEndGameStarted -= SetRigidboySettingsOnEndGame;
+            
             GameManager.OnLevelCompleted -= StoplPlayerWithDrag;
             GameManager.OnLevelStarted -= CannotMoveStartPosition;
         }
@@ -103,7 +99,7 @@ namespace RollicDeveloperCase.Player
             transform.position = new Vector3(0, 0, transform.position.z);
             transform.DOMove(startPosition, 3f);
             forwardSpeed = startSpeed;
-            SetRigidboySettingsOnStart();
+            GetComponent<PhysicsController>().SetRigidboySettingsOnStart();
 
 
         }
@@ -125,32 +121,7 @@ namespace RollicDeveloperCase.Player
             }
         }
 
-        private void SetRigidboySettingsOnEndGame()
-        {
-            _rigidbody.constraints = RigidbodyConstraints.None;
-            _rigidbody.constraints = RigidbodyConstraints.FreezePositionX;
-            _rigidbody.useGravity = true;
-
-        }
-        private void SetRigidboySettingsOnStart()
-        {
-            _rigidbody.constraints = RigidbodyConstraints.None;
-            _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;          
-            _rigidbody.useGravity = false;
-            _rigidbody.drag = 0.1f;
-            _rigidbody.angularDrag = 0.05f;
-            SetGravityOnStart();
-
-
-        }
-
-        //public void FreezeRots()
-        //{
-            
-        //    _rigidbody.constraints= RigidbodyConstraints.FreezeRotationX;
-        //    _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ;
-        //}
-
+      
         IEnumerator StopAndWait()
         {
             CalculateLocalVelx();
@@ -176,15 +147,7 @@ namespace RollicDeveloperCase.Player
             _rigidbody.angularDrag = 3;
         }
 
-        private void SetGravityOnJump()
-        {
-            Physics.gravity = Vector3.down * jumpingGravity;
-        }
-
-        private void SetGravityOnStart()
-        {
-            Physics.gravity = startGravity;
-        }
+       
 
         private void SetBorderForMovement()
         {
