@@ -12,7 +12,6 @@ namespace RollicDeveloperCase.Player
         [SerializeField] private float jumpingGravity;
         private Vector3 startGravity;
 
-
         private void Awake()
         {
             startGravity = Physics.gravity;

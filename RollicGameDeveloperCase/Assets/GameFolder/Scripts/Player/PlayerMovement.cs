@@ -28,15 +28,11 @@ namespace RollicDeveloperCase.Player
 
         const float constForce = 10f;
 
-        public float currentVelocity;
-        public float maxVelocity = 40;
 
-
-       
+        [NonSerialized] public float currentVelocity;
+        [NonSerialized] public float maxVelocity = 40;       
 
         public bool canMovingStartPosition;
-
-
 
         private void Awake()
         {
@@ -46,19 +42,15 @@ namespace RollicDeveloperCase.Player
 
         private void OnEnable()
         {
-            PlayerCollisionController.OnHitElevator += StopPlayerWait;
-           
-            GameManager.OnEndGameStarted += StopPlayer;
-            
+            PlayerCollisionController.OnHitElevator += StopPlayerWait;           
+            GameManager.OnEndGameStarted += StopPlayer;            
             GameManager.OnLevelCompleted += StoplPlayerWithDrag;
             GameManager.OnLevelStarted += CannotMoveStartPosition;
         }
         private void OnDisable()
         {
-            PlayerCollisionController.OnHitElevator -= StopPlayerWait;
-            
-            GameManager.OnEndGameStarted -= StopPlayer;
-            
+            PlayerCollisionController.OnHitElevator -= StopPlayerWait;            
+            GameManager.OnEndGameStarted -= StopPlayer;            
             GameManager.OnLevelCompleted -= StoplPlayerWithDrag;
             GameManager.OnLevelStarted -= CannotMoveStartPosition;
         }
@@ -66,14 +58,8 @@ namespace RollicDeveloperCase.Player
         private void Update()
         {
             SetBorderForMovement();
-
-        }
-
+        }      
        
-        private void CannotMoveStartPosition()
-        {
-            canMovingStartPosition = false;
-        }
 
         private void FixedUpdate()
         {
@@ -101,10 +87,15 @@ namespace RollicDeveloperCase.Player
             forwardSpeed = startSpeed;
             GetComponent<PhysicsController>().SetRigidboySettingsOnStart();
 
-
         }
 
+        private void MovePlayer()
+        {
+            CalculateLocalVelx();
 
+            localVel.z = forwardSpeed * Time.fixedDeltaTime * 100;
+            _rigidbody.velocity = transform.TransformDirection(localVel);
+        }
         private void MovePlayerWithTapping()
         {
             currentVelocity = _rigidbody.velocity.z;
@@ -140,39 +131,17 @@ namespace RollicDeveloperCase.Player
             _rigidbody.velocity = Vector3.zero;
             forwardSpeed = 0f;
         }
-
         private void StoplPlayerWithDrag()
         {
             _rigidbody.drag = 3;
             _rigidbody.angularDrag = 3;
-        }
-
+        }      
        
-
-        private void SetBorderForMovement()
-        {
-            playerTransformX = transform.position.x;
-            playerTransformX = Mathf.Clamp(playerTransformX, -3f, 3f);
-            transform.position = new Vector3(playerTransformX, transform.position.y, transform.position.z);
-        }
-
-
-
-
-        private void MovePlayer()
-        {
-            CalculateLocalVelx();
-
-            localVel.z = forwardSpeed * Time.fixedDeltaTime * 100;
-            _rigidbody.velocity = transform.TransformDirection(localVel);
-        }
-
+       
         private void StopPlayerWait()
         {
             StartCoroutine(StopAndWait());
         }
-
-
         private void CalculateLocalVelx()
         {
             swerveAmount = Time.fixedDeltaTime * swerveSpeed * _playerInput.MovefactorX;
@@ -180,6 +149,16 @@ namespace RollicDeveloperCase.Player
 
             localVel = transform.InverseTransformDirection(_rigidbody.velocity);
             localVel.x = swerveAmount;
+        }
+        private void SetBorderForMovement()
+        {
+            playerTransformX = transform.position.x;
+            playerTransformX = Mathf.Clamp(playerTransformX, -3f, 3f);
+            transform.position = new Vector3(playerTransformX, transform.position.y, transform.position.z);
+        }
+        private void CannotMoveStartPosition()
+        {
+            canMovingStartPosition = false;
         }
 
 
