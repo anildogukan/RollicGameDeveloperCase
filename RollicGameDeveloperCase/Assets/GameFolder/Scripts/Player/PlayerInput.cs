@@ -23,8 +23,7 @@ namespace RollicDeveloperCase.Player
                 SwerveMmovementInput();
             }
             else if (GameManager.Instance.gameState == GameState.EndGame)
-            {
-                Debug.Log(forceFactor);
+            {               
                 TapMovementInput();
             }
 

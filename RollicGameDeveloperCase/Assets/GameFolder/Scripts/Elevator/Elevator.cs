@@ -10,7 +10,6 @@ namespace RollicDeveloperCase
 {
     public class Elevator : MonoBehaviour
     {
-
         [SerializeField] private TextMeshPro collectedNumberText;
         [SerializeField] private int totalCollectedCount;
         [SerializeField] private ElevatorGround _elevatorground;
@@ -25,10 +24,19 @@ namespace RollicDeveloperCase
 
         public Action OnAnObjectCollected;
 
-        public static Elevator currentCollectableArea;    
-        
+        public static Elevator currentCollectableArea;
 
 
+        private void OnEnable()
+        {
+            OnAnObjectCollected += IncreaseCollectedCount;
+            PlayerMovement.OnCheckPassCondition += CheckPass;
+        }
+        private void OnDisable()
+        {
+            OnAnObjectCollected -= IncreaseCollectedCount;
+            PlayerMovement.OnCheckPassCondition -= CheckPass;
+        }
         private void Start()
         {
             currentCollectedCount = 0;
@@ -41,24 +49,7 @@ namespace RollicDeveloperCase
             EarningManager.collectedDiamondInthisRound++;
             collectedNumberText.text = currentCollectedCount + "" + "/" + totalCollectedCount;            
 
-        }
-
-        private void OnEnable()
-        {
-            OnAnObjectCollected += IncreaseCollectedCount;
-            PlayerMovement.OnCheckPassCondition += CheckPass;
-
-
-
-        }
-        private void OnDisable()
-        {
-            OnAnObjectCollected -= IncreaseCollectedCount;
-            PlayerMovement.OnCheckPassCondition -= CheckPass;
-
-        }
-
-
+        }     
         private void CheckPass()
         {
             StartCoroutine(CheckPassConditions());
@@ -75,17 +66,13 @@ namespace RollicDeveloperCase
                     BreakIntoPiecesCollectedObject();
 
                     yield return new WaitForSeconds(1f);
-                    _door.OpenDoor();
-                    
-
-
+                    _door.OpenDoor();                   
                 }
             }
           
         }
         private void BreakIntoPiecesCollectedObject()
-        {
-            Debug.Log("Girdi");
+        {           
             foreach (GameObject collectedObject in this.collectedObjects)
             {
                 pieces = Instantiate(_piecesPrefab.transform, collectedObject.transform.position, Quaternion.identity);

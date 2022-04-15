@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using RollicDeveloperCase.Player;
 using UnityEngine.SceneManagement;
@@ -13,75 +12,56 @@ namespace RollicDeveloperCase
 
         const float levelDistance = 582.8f;
         float levedistanceMultiplier;
-        [SerializeField]private GameObject _playerPrefab;
+        [SerializeField] private GameObject _playerPrefab;
 
         GameObject _player;
 
         int randomLevel;
         int randomLevelNext;
-        
+
         private void Awake()
         {
-            
-            
-             _player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
-            
-
+            _player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
             levedistanceMultiplier = 0;
-            Debug.Log(PlayerPrefs.GetInt(("CurrentLevel")));
-            Debug.Log("Currentlevel ne başlangıçta" + PlayerPrefs.GetInt(("CurrentCreatedLevel")));
-            Debug.Log(level.Length);
+            CreatingFirstTwoLevels();
+        }
 
+        private void CreatingFirstTwoLevels()
+        {
             if (PlayerPrefs.GetInt(("CurrentLevel")) < level.Length - 1)
             {
-               GameObject firstLevel = Instantiate(level[PlayerPrefs.GetInt("CurrentLevel")], new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);
+                GameObject firstLevel = Instantiate(level[PlayerPrefs.GetInt("CurrentLevel")], new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);
                 createdLevels.Add(firstLevel);
                 levedistanceMultiplier++;
-               GameObject SecondLevel= Instantiate(level[PlayerPrefs.GetInt("CurrentLevel") + 1], new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);
+                GameObject SecondLevel = Instantiate(level[PlayerPrefs.GetInt("CurrentLevel") + 1], new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);
                 createdLevels.Add(SecondLevel);
             }
             else
             {
-
-               
-
-
                 GameObject firstLevel = Instantiate(level[PlayerPrefs.GetInt(("CurrentCreatedLevel"))], new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);
                 createdLevels.Add(firstLevel);
                 levedistanceMultiplier++;
                 randomLevel = Random.Range(0, level.Length);
                 while (randomLevel == PlayerPrefs.GetInt(("CurrentCreatedLevel")))
                 {
-                   
                     randomLevel = Random.Range(0, level.Length);
-                   
                 }
-                GameManager.isGameOpenNew = true;               
+                GameManager.isGameOpenNew = true;
 
-
-                GameObject SecondLevel =Instantiate(level[randomLevel], new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);
+                GameObject SecondLevel = Instantiate(level[randomLevel], new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);
                 createdLevels.Add(SecondLevel);
-                
+
 
             }
-
-        }
-
-
-
-        private void RestartLevel()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
+        }       
         private void GoNextlevel()
         {
             levedistanceMultiplier++;
             if (PlayerPrefs.GetInt(("CurrentLevel")) < level.Length - 2)
             {
                 PlayerPrefs.SetInt(("CurrentLevel"), PlayerPrefs.GetInt("CurrentLevel") + 1);
-               GameObject newLevel= Instantiate(level[PlayerPrefs.GetInt("CurrentLevel") + 1],
-                new Vector3(0, 0,levelDistance* levedistanceMultiplier), Quaternion.identity);
+                GameObject newLevel = Instantiate(level[PlayerPrefs.GetInt("CurrentLevel") + 1],
+                 new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);
                 Destroy(createdLevels[0]);
                 createdLevels.Remove(createdLevels[0]);
                 createdLevels.Add(newLevel);
@@ -95,38 +75,37 @@ namespace RollicDeveloperCase
 
                     randomLevelNext = Random.Range(0, level.Length);
                     Debug.Log("Random" + randomLevelNext);
-                }               
-               
+                }
+
                 PlayerPrefs.SetInt(("CurrentLevel"), PlayerPrefs.GetInt("CurrentLevel") + 1);
-                GameObject newLevel= Instantiate(level[randomLevelNext], new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);               
+                GameObject newLevel = Instantiate(level[randomLevelNext], new Vector3(0, 0, levelDistance * levedistanceMultiplier), Quaternion.identity);
                 Destroy(createdLevels[0]);
                 createdLevels.Remove(createdLevels[0]);
                 createdLevels.Add(newLevel);
 
             }
 
-            
-        }
 
-       
+        }
         private void FindRestartScene()
         {
-            if (GameManager.isGameOpenNew==true)
+            if (GameManager.isGameOpenNew == true)
             {
                 PlayerPrefs.SetInt("CurrentCreatedLevel", randomLevel);
             }
             if (!GameManager.isGameOpenNew)
             {
                 PlayerPrefs.SetInt("CurrentCreatedLevel", randomLevelNext);
-                Debug.Log("Currentlevel ne"+ PlayerPrefs.GetInt(("CurrentCreatedLevel")));
             }
             GameManager.isGameOpenNew = false;
         }
-
-
         private void RunPlayerMovingOnEndGame()
         {
             StartCoroutine(_player.GetComponent<PlayerMovement>().MoveToStartPosition(new Vector3(0, 0, levelDistance * levedistanceMultiplier)));
+        }
+        private void RestartLevel()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         private void OnEnable()
         {
