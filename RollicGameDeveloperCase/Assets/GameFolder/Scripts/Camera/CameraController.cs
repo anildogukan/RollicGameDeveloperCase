@@ -10,13 +10,10 @@ namespace RollicDeveloperCase.Camera
         [Range(0,1)]
         [SerializeField] private float smoothFactor;
 
-
         Vector3 offset;       
         Transform player;
 
-        Vector3 desiredPosition;
-        
-
+        Vector3 desiredPosition;       
 
         private void Start()
         {           
@@ -25,13 +22,11 @@ namespace RollicDeveloperCase.Camera
         }
 
         private void LateUpdate()
-        {           
-            
+        {          
           desiredPosition= player.position+ offset;
 
           transform.position = Vector3.Lerp(transform.position,
-          new Vector3(transform.position.x, desiredPosition.y, desiredPosition.z), smoothFactor);
-           
+          new Vector3(transform.position.x, desiredPosition.y, desiredPosition.z), smoothFactor);           
 
         }
 

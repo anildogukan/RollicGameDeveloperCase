@@ -58,10 +58,7 @@ namespace RollicDeveloperCase
                 return;
             StartCoroutine(SetSequenceOfMovementEvents());
             allowDrop = true;
-        }
-        /// <summary>
-        /// after sinius movement base  fixed 
-        /// </summary>
+        }        
         public virtual void MoveVertical()
         {
             sinWaweValue = Mathf.Sin(Time.time * speed) * amplitude;

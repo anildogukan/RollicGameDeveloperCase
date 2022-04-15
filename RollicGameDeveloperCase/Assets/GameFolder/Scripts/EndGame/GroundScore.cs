@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GroundScore : MonoBehaviour
+namespace RollicDeveloperCase.EndGame
 {
-    public TextMeshPro scoreText;
-    public MeshRenderer groundMesh;
-   
+    public class GroundScore : MonoBehaviour
+    {
+        public TextMeshPro scoreText;
+        public MeshRenderer groundMesh;
+
+    }
 }

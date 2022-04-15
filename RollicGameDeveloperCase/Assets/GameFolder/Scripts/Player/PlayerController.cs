@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RollicDeveloperCase.Player
 {
     public class PlayerController : SingletonNonPersistant<PlayerController>
     {
-        [SerializeField] private GameObject collectorAsistant;
-        
+        [SerializeField] private GameObject collectorAsistant;       
 
         public override void Awake()
         {

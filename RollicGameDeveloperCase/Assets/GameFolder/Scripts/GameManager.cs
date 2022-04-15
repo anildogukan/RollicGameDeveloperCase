@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using RollicDeveloperCase.UI;
 
 namespace RollicDeveloperCase
 {
     public enum GameState {StartScreen,GamePlay,Failed,EndGame,Completed }
     public class GameManager : SingletonPersistant<GameManager>
-    {
-        //*** read me yeni level yüklerken +582.8 uzakklığa instantiate et
+    {       
 
         public static Action OnLevelFailed;
         public static Action OnLevelCompleted;
