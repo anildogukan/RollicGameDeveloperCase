@@ -20,7 +20,7 @@ namespace RollicDeveloperCase
         int randomLevelNext;
 
         private void Awake()
-        {
+        {            
             _player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
             levedistanceMultiplier = 0;
             CreatingFirstTwoLevels();
